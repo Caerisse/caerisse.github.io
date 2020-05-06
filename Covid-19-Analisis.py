@@ -51,6 +51,8 @@ arg_continental = arg[arg.nam != "Tierra del Fuego, Antártida e Islas del Atlá
 
 #### Bokeh  ####
 
+output_file("index.html")
+
 merged_json = json.loads(arg_continental.to_json())
 json_data = json.dumps(merged_json)
 
@@ -93,6 +95,7 @@ def update_plot(attr, old, new):
     curdoc().add_root(layout)
 
 
+
 # Create a plotting function
 def make_plot(field_name):    
     # Set the format of the colorbar
@@ -100,17 +103,22 @@ def make_plot(field_name):
     max_range = max(arg[field_name])
     field_format = "0"
 
-    if input_field == "Confirmados" or input_field == "Activos":
+    if field_name == "Confirmados":
         # Define a sequential multi-hue color palette.
         palette = brewer['Blues'][8]
         # Reverse color order so that dark blue is highest obesity.
         palette = palette[::-1]
-    elif input_field == "Recuperados":
+    elif field_name == "Activos":
+        # Define a sequential multi-hue color palette.
+        palette = brewer['Blues'][8]
+        # Reverse color order so that dark blue is highest obesity.
+        palette = palette[::-1]
+    elif field_name == "Recuperados":
         # Define a sequential multi-hue color palette.
         palette = brewer['Greens'][8]
         # Reverse color order so that dark blue is highest obesity.
         palette = palette[::-1]
-    elif input_field == "Fallecidos":
+    elif field_name == "Fallecidos":
         # Define a sequential multi-hue color palette.
         palette = brewer['Reds'][8]
         # Reverse color order so that dark blue is highest obesity.
@@ -127,7 +135,7 @@ def make_plot(field_name):
     # Create figure object.
 
     p = figure(title = field_name, 
-            plot_height = 650, plot_width = 850,
+            plot_height = 900, plot_width = 700,
             toolbar_location = None)
     p.xgrid.grid_line_color = None
     p.ygrid.grid_line_color = None
