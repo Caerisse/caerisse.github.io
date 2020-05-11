@@ -262,4 +262,4 @@ tab_list.append(tabMapWithSelectAndUpdate(arg))
 tabs = Tabs(tabs=tab_list)
 
 curdoc().add_root(tabs)
-show(tabs)
+#show(tabs)
