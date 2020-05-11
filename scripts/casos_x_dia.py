@@ -33,14 +33,17 @@ def tabCasosXDia(casos_arg: pd.DataFrame, casos_arg_predict: pd.DataFrame):
 
     casos_dia.legend.location="top_left"
 
-    hover = HoverTool(  tooltips = [('Dia', '@dias'),
+    hover1 = HoverTool(  tooltips = [('Dia', '@dias'),
                                     ('Casos Confirmados', '@casos_x'),
-                                    ('Casos Nuevos', '@casos_z1'),
+                                    ('Casos Nuevos', '@casos_z1')],
+                        mode='vline',
+                        renderers = [gliph1])
+    hover2 = HoverTool(  tooltips = [('Dia', '@dias'),
                                     ('Casos Predecidos', '@casos_y'),
                                     ('Casos Nuevos Predecidos', '@casos_z2')],
                         mode='vline',
-                        renderers = [gliph1, gliph2])
-    casos_dia.add_tools(hover)
+                        renderers = [gliph2])
+    casos_dia.add_tools(hover1, hover2)
 
     # Create Tab
     l = layout([[casos_dia]])

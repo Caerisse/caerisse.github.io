@@ -5,6 +5,13 @@ from shapely.geometry import Polygon, MultiPolygon
 from bokeh.io import show, output_file
 from bokeh.io.doc import curdoc
 from bokeh.models import Tabs
+import os
+import sys
+
+# Change working directory for Tobi
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
 
 from scripts.casos_x_dia import tabCasosXDia
 from scripts.maps1 import tabMapWithSelectAndUpdate
@@ -43,6 +50,9 @@ for multipolygon in arg[arg.nam=='Tierra del Fuego, Antártida e Islas del Atlá
 
 arg.geometry[16] = MultiPolygon(new_poligon_list)
 
+# Reducir la cantidad de puntos en el mapa para reducir el tiempo de carga
+for i in range(arg.shape[0]):
+    arg.geometry[i] = arg.geometry[i].simplify(tolerance=0.05, preserve_topology=False)
 
 
 url = "https://raw.githubusercontent.com/tobiascanavesi/covidarg/master/casosarg.csv"
