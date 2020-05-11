@@ -10,6 +10,10 @@ Beaker==1.11.0
 bokeh==2.0.2
 breezy==3.0.2
 CacheControl==0.12.6
+numpy==1.18.2
+pandas==1.0.3
+scipy==1.4.1
+geopandas==0.7.0
 Cartopy==0.18.0
 ceph-volume==1.0.0
 cephfs==2.0.0
@@ -37,7 +41,6 @@ fastimport==0.9.8
 Fiona==1.8.13.post1
 geographiclib==1.50
 GeoIP==1.3.2
-geopandas==0.7.0
 geoplot==0.4.0
 geopy==1.21.0
 html5lib==1.0.1
@@ -64,11 +67,9 @@ msgpack==1.0.0
 multidict==4.7.5
 munch==2.5.0
 nose==1.3.7
-numpy==1.18.2
 oauthlib==3.1.0
 ordered-set==3.1.1
 packaging==20.3
-pandas==1.0.3
 patiencediff==0.1.0
 pbr==5.4.4
 pep517==0.8.2
@@ -103,7 +104,6 @@ requests==2.23.0
 retrying==1.3.3
 rgw==2.0.0
 scikit-learn==0.22.2.post1
-scipy==1.4.1
 seaborn==0.10.1
 service-identity==18.1.0
 setproctitle==1.1.10
