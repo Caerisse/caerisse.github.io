@@ -247,8 +247,8 @@ def tabCasosXDia(casos_arg: pd.DataFrame, casos_arg_predict: pd.DataFrame):
                         formatters={'@dias': 'datetime'},
                         renderers = [gliph1])
     hover2 = HoverTool(  tooltips = [('Dia', '@dias{%d-%B-%Y}'),
-                                    ('Casos Predecidos', '@casos_y'),
-                                    ('Casos Nuevos Predecidos', '@casos_z2')],
+                                    ('Casos Predichos', '@casos_y'),
+                                    ('Casos Nuevos Predichos', '@casos_z2')],
                         mode='vline',
                         formatters={'@dias': 'datetime'},
                         renderers = [gliph2])
