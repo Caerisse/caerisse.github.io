@@ -2,11 +2,10 @@ import pandas as pd
 import numpy as np
 import geopandas as gpd
 import json
-from copy import deepcopy
 from shapely.geometry import Polygon, MultiPolygon
 from bokeh.io import show, output_file
 from bokeh.io.doc import curdoc
-from bokeh.models import HoverTool, Paragraph, ColumnDataSource, Tabs, Panel, Select, CheckboxButtonGroup, GeoJSONDataSource, LinearColorMapper, ColorBar, NumeralTickFormatter
+from bokeh.models import HoverTool, Paragraph, Div, ColumnDataSource, Tabs, Panel, Select, CheckboxButtonGroup, GeoJSONDataSource, LinearColorMapper, ColorBar, NumeralTickFormatter, DatetimeTickFormatter
 from bokeh.plotting import figure
 from bokeh.palettes import Spectral11, brewer
 from bokeh.layouts import layout
@@ -49,8 +48,10 @@ for i in range(arg.shape[0]):
 
 
 casos_arg = pd.read_csv('casosarg.csv', sep = ",", header = 0, names=("dias","casos"))
+casos_arg['dias'] = pd.date_range('3/6/2020', periods=casos_arg.shape[0], freq='D')
 
 casos_arg_predict = pd.read_csv('predict5.csv', sep = ",", header = 0, names=("dias","casos"))
+casos_arg_predict['dias'] = pd.date_range(casos_arg['dias'][casos_arg.shape[0]-1]+pd.Timedelta('1d'), periods=casos_arg_predict.shape[0], freq='D')
 
 mayores_65 = pd.read_csv("data/mayores65.txt", sep = ",")
 arg = pd.merge(arg, mayores_65, on="nam")
@@ -59,6 +60,13 @@ centros = pd.read_csv("data/centros.txt", sep = ",")
 arg = pd.merge(arg, centros, on="nam")
 
 ###### Bokeh ######
+
+logo = Div(text="""<img src="https://github.com/Caerisse/caerisse.github.io/blob/master/logo.png" 
+    alt="logo_image_missing">""", width=150, height=150, sizing_mode="scale_both")
+credits = Div(text="""* Predicciones realizadas mediante el uso de redes neuronales.</br>
+* Utilizando los datos del Ministerio de Salud de la Nación.</br>
+* Fuente CENSO 2010, INDEC.
+""", width=400, height=150)
 
 
 def tabMapWithSelectAndUpdate(arg: pd.DataFrame):
@@ -141,7 +149,8 @@ def tabMapWithSelectAndUpdate(arg: pd.DataFrame):
         # Create figure object.
 
         map_arg = figure(title = field_name1, 
-            plot_height = 900, plot_width = 700)
+            plot_height = 900, plot_width = 700,
+            sizing_mode="scale_both")
         map_arg.xgrid.grid_line_color = None
         map_arg.ygrid.grid_line_color = None
         map_arg.axis.visible = False
@@ -194,7 +203,8 @@ def tabMapWithSelectAndUpdate(arg: pd.DataFrame):
     l = layout([    [select1],
                     [paragraph1],
                     [select2],
-                    [map_arg]
+                    [map_arg],
+                    [logo, credits]
                 ]) 
     tab = Panel(child=l,title="Mapa Actual")
     return tab
@@ -221,7 +231,8 @@ def tabCasosXDia(casos_arg: pd.DataFrame, casos_arg_predict: pd.DataFrame):
     casos_arg_ds = ColumnDataSource(casos)
     casos_dia = figure(plot_width = 900, plot_height = 500, 
                 title = 'Casos de Coronavirus por dia en Argentina',
-                x_axis_label = 'Dias', y_axis_label = 'Casos')
+                x_axis_label = 'Dia', y_axis_label = 'Casos', x_axis_type="datetime")
+    
 
     gliph1 = casos_dia.line('dias','casos_x',source=casos_arg_ds, legend_label='Casos Confirmados', color='red', line_width=3)
     casos_dia.line('dias','casos_z1',source=casos_arg_ds, legend_label='Casos Nuevos', color='gold', line_width=3)    
@@ -230,20 +241,26 @@ def tabCasosXDia(casos_arg: pd.DataFrame, casos_arg_predict: pd.DataFrame):
 
     casos_dia.legend.location="top_left"
 
-    hover1 = HoverTool(  tooltips = [('Dia', '@dias'),
+    hover1 = HoverTool(  tooltips = [('Dia', '@dias{%d-%B-%Y}'),
                                     ('Casos Confirmados', '@casos_x'),
                                     ('Casos Nuevos', '@casos_z1')],
                         mode='vline',
+                        formatters={'@dias': 'datetime'},
                         renderers = [gliph1])
-    hover2 = HoverTool(  tooltips = [('Dia', '@dias'),
+    hover2 = HoverTool(  tooltips = [('Dia', '@dias{%d-%B-%Y}'),
                                     ('Casos Predecidos', '@casos_y'),
                                     ('Casos Nuevos Predecidos', '@casos_z2')],
                         mode='vline',
+                        formatters={'@dias': 'datetime'},
                         renderers = [gliph2])
     casos_dia.add_tools(hover1, hover2)
 
+    casos_dia.xaxis.formatter = DatetimeTickFormatter(days="%d-%B-%Y")
+
     # Create Tab
-    l = layout([[casos_dia]])
+    l = layout([[casos_dia],
+                [[logo], [credits]]
+                ])
     tab = Panel(child=l, title = 'Evolucion Diaria')
     return tab
 
@@ -262,4 +279,5 @@ tab_list.append(tabMapWithSelectAndUpdate(arg))
 tabs = Tabs(tabs=tab_list)
 
 curdoc().add_root(tabs)
+curdoc().title = "Covid Argentina"
 #show(tabs)
