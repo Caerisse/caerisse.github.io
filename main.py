@@ -61,12 +61,12 @@ arg = pd.merge(arg, centros, on="nam")
 
 ###### Bokeh ######
 
-logo = Div(text="""<img src="https://github.com/Caerisse/caerisse.github.io/blob/master/logo.png" 
-    alt="logo_image_missing">""", width=150, height=150, sizing_mode="scale_both")
-credits = Div(text="""* Predicciones realizadas mediante el uso de redes neuronales.</br>
-* Utilizando los datos del Ministerio de Salud de la Nación.</br>
+logo = Div(text="""<img src="https://raw.githubusercontent.com/Caerisse/caerisse.github.io/master/logo.png" 
+    alt="logo_image_missing">""", width=100, height=100)
+credits = Div(text="""* Predicciones realizadas mediante el uso de redes neuronales.</br></br>
+* Utilizando los datos del Ministerio de Salud de la Nación.</br></br>
 * Fuente CENSO 2010, INDEC.
-""", width=400, height=150)
+""", width=400, height=100)
 
 
 def tabMapWithSelectAndUpdate(arg: pd.DataFrame):
@@ -149,8 +149,7 @@ def tabMapWithSelectAndUpdate(arg: pd.DataFrame):
         # Create figure object.
 
         map_arg = figure(title = field_name1, 
-            plot_height = 900, plot_width = 700,
-            sizing_mode="scale_both")
+            plot_height = 900, plot_width = 700,)
         map_arg.xgrid.grid_line_color = None
         map_arg.ygrid.grid_line_color = None
         map_arg.axis.visible = False
@@ -200,11 +199,11 @@ def tabMapWithSelectAndUpdate(arg: pd.DataFrame):
     paragraph1 = Paragraph(text="""Datos en circulos:""",
         width=600)
 
-    l = layout([    [select1],
+    l = layout([    [logo, credits],
+                    [select1],
                     [paragraph1],
                     [select2],
-                    [map_arg],
-                    [logo, credits]
+                    [map_arg]
                 ]) 
     tab = Panel(child=l,title="Mapa Actual")
     return tab
@@ -258,9 +257,7 @@ def tabCasosXDia(casos_arg: pd.DataFrame, casos_arg_predict: pd.DataFrame):
     casos_dia.xaxis.formatter = DatetimeTickFormatter(days="%d-%B-%Y")
 
     # Create Tab
-    l = layout([[casos_dia],
-                [[logo], [credits]]
-                ])
+    l = layout([[logo, credits],[casos_dia]])
     tab = Panel(child=l, title = 'Evolucion Diaria')
     return tab
 
