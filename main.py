@@ -235,8 +235,8 @@ def tabCasosXDia(casos_arg: pd.DataFrame, casos_arg_predict: pd.DataFrame):
 
     gliph1 = casos_dia.line('dias','casos_x',source=casos_arg_ds, legend_label='Casos Confirmados', color='red', line_width=3)
     casos_dia.line('dias','casos_z1',source=casos_arg_ds, legend_label='Casos Nuevos', color='gold', line_width=3)    
-    gliph2 = casos_dia.line('dias','casos_y',source=casos_arg_ds, legend_label='Casos Predecidos', color='blue', line_width=3)
-    casos_dia.line('dias','casos_z2',source=casos_arg_ds, legend_label='Casos Nuevos Predecidos', color='green', line_width=3)
+    gliph2 = casos_dia.line('dias','casos_y',source=casos_arg_ds, legend_label='Casos Predichos', color='blue', line_width=3)
+    casos_dia.line('dias','casos_z2',source=casos_arg_ds, legend_label='Casos Nuevos Predichos', color='green', line_width=3)
 
     casos_dia.legend.location="top_left"
 
