@@ -31,10 +31,15 @@
       var view = new MapView({
         container: "viewDiv",
         map: map,
-        center: [-41.0,-65.0],
+        center: [-65.0,-41.0],
         zoom: 3
       });
 
+      var covidLayer = new FeatureLayer({
+        url: "https://services8.arcgis.com/lWclWcVNLPjG6Dvs/arcgis/rest/services/covidarg/FeatureServer/0",
+      });
+
+      map.add(covidLayer, 0);
 
     });
   </script>

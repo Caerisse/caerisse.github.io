@@ -59,6 +59,9 @@ arg = pd.merge(arg, mayores_65, on="nam")
 centros = pd.read_csv("data/centros.txt", sep = ",")
 arg = pd.merge(arg, centros, on="nam")
 
+arg.to_file("arg.geojson", driver='GeoJSON')
+exit()
+
 ###### Bokeh ######
 
 def tabMapWithSelectAndUpdate(arg: pd.DataFrame):
