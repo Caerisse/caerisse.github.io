@@ -43,8 +43,8 @@ for multipolygon in arg[arg.nam=='Tierra del Fuego, Antártida e Islas del Atlá
 arg.geometry[16] = MultiPolygon(new_poligon_list)
 
 # Reducir la cantidad de puntos en el mapa para reducir el tiempo de carga
-for i in range(arg.shape[0]):
-    arg.geometry[i] = arg.geometry[i].simplify(tolerance=0.05, preserve_topology=False)
+#for i in range(arg.shape[0]):
+#    arg.geometry[i] = arg.geometry[i].simplify(tolerance=0.05, preserve_topology=False)
 
 
 casos_arg = pd.read_csv('casosarg.csv', sep = ",", header = 0, names=("dias","casos"))
@@ -59,7 +59,7 @@ arg = pd.merge(arg, mayores_65, on="nam")
 centros = pd.read_csv("data/centros.txt", sep = ",")
 arg = pd.merge(arg, centros, on="nam")
 
-arg.to_file("arg.geojson", driver='GeoJSON')
+arg.to_file("arg_full.geojson", driver='GeoJSON')
 exit()
 
 ###### Bokeh ######

@@ -36,7 +36,23 @@
       });
 
       var covidLayer = new FeatureLayer({
-        url: "https://services8.arcgis.com/lWclWcVNLPjG6Dvs/arcgis/rest/services/covidarg/FeatureServer/0",
+        url: "https://services8.arcgis.com/lWclWcVNLPjG6Dvs/arcgis/rest/services/covidarg_fullres/FeatureServer/0",
+        
+        renderer: {
+          "type": "simple",
+          "symbol": {
+            "type": "esriSFS",
+            "style": "esriSFSSolid",
+            "color": "blue",
+            "outline": {
+              "type": "esriSLS",
+              "style": "esriSLSSolid",
+              "color": "green",
+              "width": 0.75
+            }
+          }
+        }
+
       });
 
       map.add(covidLayer, 0);
