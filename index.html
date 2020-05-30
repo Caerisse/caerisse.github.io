@@ -25,27 +25,16 @@
     ], function(Map, MapView, BasemapToggle, BasemapGallery) {
 
       var map = new Map({
-        basemap: "topo-vector"
+        basemap: "gray-vector"
       });
 
       var view = new MapView({
         container: "viewDiv",
         map: map,
-        center: [-118.71511,34.09042],
-        zoom: 11
+        center: [-41.0,-65.0],
+        zoom: 3
       });
 
-      var basemapGallery = new BasemapGallery({
-        view: view,
-        source: {
-          portal: {
-            url: "https://www.arcgis.com",
-            useVectorBasemaps: true  // Load vector tile basemaps
-          }
-        }
-      });
-
-      view.ui.add(basemapGallery, "top-right");
 
     });
   </script>
