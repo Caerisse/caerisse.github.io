@@ -19,8 +19,10 @@
   <script>
     require([
       "esri/Map",
-      "esri/views/MapView"
-    ], function(Map, MapView) {
+      "esri/views/MapView",
+      "esri/widgets/BasemapToggle",
+      "esri/widgets/BasemapGallery"
+    ], function(Map, MapView, BasemapToggle, BasemapGallery) {
 
       var map = new Map({
         basemap: "topo-vector"
@@ -32,6 +34,13 @@
         center: [-118.71511,34.09042],
         zoom: 11
       });
+
+      var basemapToggle = new BasemapToggle({
+        view: view,
+        nextBasemap: "satellite"
+      });
+
+      view.ui.add(basemapToggle, "bottom-right");
 
     });
   </script>
