@@ -20,9 +20,8 @@
     require([
       "esri/Map",
       "esri/views/MapView",
-      "esri/widgets/BasemapToggle",
-      "esri/widgets/BasemapGallery"
-    ], function(Map, MapView, BasemapToggle, BasemapGallery) {
+      "esri/layers/FeatureLayer"
+    ], function(Map, MapView, FeatureLayer) {
 
       var map = new Map({
         basemap: "gray-vector"
@@ -38,24 +37,7 @@
       var covidLayer = new FeatureLayer({
         url: "https://services8.arcgis.com/lWclWcVNLPjG6Dvs/arcgis/rest/services/covidarg_fullres/FeatureServer/0",
         
-        renderer: {
-          "type": "simple",
-          "symbol": {
-            "type": "esriSFS",
-            "style": "esriSFSSolid",
-            "color": "blue",
-            "outline": {
-              "type": "esriSLS",
-              "style": "esriSLSSolid",
-              "color": "green",
-              "width": 0.75
-            }
-          }
-        },
-
-        transparency: 0,
         
-        labelingInfo: null
 
       });
 
