@@ -39,12 +39,12 @@
                 type: "simple",
                 symbol: { 
                     type: "simple-marker",
-                    color: "green",
+                    /* color: "blue",
                     outline: {
                             color: "blue",
                             width: 1
                         }
-                    },
+                    }, */
                     visualVariables: [{
                     type: "size",
                     field: "Confirmados",
@@ -61,7 +61,7 @@
                         { value: 3200, size: 64},
                         { value: 6400, size: 128},
                         ]
-                    },{
+                    },/* {
                     type: "size",
                     field: "Activos",
                     legendOptions: {
@@ -109,12 +109,12 @@
                         { value: 3200, size: 64},
                         { value: 6400, size: 128},
                         ]
-                    }]
-                /* visualVariables: [{
+                    } ]*/
+                /* visualVariables: [*/{
                     type: "color",
                     field: "Confirmados",
                     legendOptions: {
-                        title: "Casos Confirmados"
+                        title: "Confirmados"
                     },
                     stops: [
                         { value: 50, color: "#DDBBBD"},
@@ -126,7 +126,8 @@
                         { value: 3200, color: "#6D363A"},
                         { value: 6400, color: "#52282B"},
                         ]
-                    }] */
+                    }]
+                }
             }
 
             var popupProvincia = {
