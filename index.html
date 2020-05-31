@@ -41,95 +41,24 @@
                     type: "simple-marker",
                     color: "blue",
                     outline: {
-                            color: "blue",
-                            width: 1
-                        }
-                    },
-                    visualVariables: [{
-                    type: "size",
-                    field: "Confirmados",
-                    legendOptions: {
-                        title: "Casos"
-                    },
-                    stops: [
-                        { value: 50, size: 1},
-                        { value: 100, size: 2},
-                        { value: 200, size: 4},
-                        { value: 400, size: 8},
-                        { value: 800, size: 16},
-                        { value: 1600, size: 32},
-                        { value: 3200, size: 64},
-                        { value: 6400, size: 128},
+                        color: "blue",
+                        width: 1
+                    }
+                },
+                visualVariables: [
+                    {   type: "size",
+                        field: "Confirmados",
+                        legendOptions: {
+                            title: "Casos"
+                        },
+                        stops: [
+                            { value: 100, size: 3},
+                            { value: 5000, size: 150},
                         ]
-                    },/* {
-                    type: "size",
-                    field: "Activos",
-                    legendOptions: {
-                        title: "Casos"
-                    },
-                    stops: [
-                        { value: 50, size: 1},
-                        { value: 100, size: 2},
-                        { value: 200, size: 4},
-                        { value: 400, size: 8},
-                        { value: 800, size: 16},
-                        { value: 1600, size: 32},
-                        { value: 3200, size: 64},
-                        { value: 6400, size: 128},
-                        ]
-                    },{
-                    type: "size",
-                    field: "Recuperados",
-                    legendOptions: {
-                        title: "Casos"
-                    },
-                    stops: [
-                        { value: 50, size: 1},
-                        { value: 100, size: 2},
-                        { value: 200, size: 4},
-                        { value: 400, size: 8},
-                        { value: 800, size: 16},
-                        { value: 1600, size: 32},
-                        { value: 3200, size: 64},
-                        { value: 6400, size: 128},
-                        ]
-                    },{
-                    type: "size",
-                    field: "Fallecidos",
-                    legendOptions: {
-                        title: "Casos"
-                    },
-                    stops: [
-                        { value: 50, size: 1},
-                        { value: 100, size: 2},
-                        { value: 200, size: 4},
-                        { value: 400, size: 8},
-                        { value: 800, size: 16},
-                        { value: 1600, size: 32},
-                        { value: 3200, size: 64},
-                        { value: 6400, size: 128},
-                        ]
-                     ]
-                    },{
-                    type: "color",
-                    field: "Confirmados",
-                    legendOptions: {
-                        title: "Confirmados"
-                    },
-                    stops: [
-                        { value: 50, color: "#DDBBBD"},
-                        { value: 100, color: "#D09FA3"},
-                        { value: 200, color: "#C28488"},
-                        { value: 400, color: "#B16065"},
-                        { value: 800, color: "#A45156"},
-                        { value: 1600, color: "#894348"},
-                        { value: 3200, color: "#6D363A"},
-                        { value: 6400, color: "#52282B"},
-                        ]
-                    }*/
-                    ]
-                }
+                    }
+                ],
             }
+            
 
             var popupProvincia = {
                 title: "{nam}",
