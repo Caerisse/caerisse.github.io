@@ -47,7 +47,7 @@
         "title": "{nam}",
         "content":  "<b>Casos Confirmados:</b> {Confirmados}<br>" +
                     "<b>Casos Activos:</b> {Activos}<br>" + 
-                    "<b>Casos Recuperados:</b> {Recuparedos}<br>" + 
+                    "<b>Casos Recuperados:</b> {Recuparados}<br>" + 
                     "<b>Casos Fallecidos:</b> {Fallecidos}<br>" +
                     "<b>Habitantes mayores de 65:</b> {Mayores_de_65}"
       }
@@ -74,7 +74,9 @@
       var covidLayer = new FeatureLayer({
         url: "https://services8.arcgis.com/lWclWcVNLPjG6Dvs/arcgis/rest/services/covidarg/FeatureServer/0",
         
-        popupTemplate: popupProvincia
+        renderer:renderer,
+        popupTemplate: popupProvincia,
+        labelingInfo: [labels]
 
       });
 
