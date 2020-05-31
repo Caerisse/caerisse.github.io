@@ -11,13 +11,13 @@
             height: 100%;
             width: 100%;
         }
-
+/* 
         #timeSlider {
             padding: 10px;
             margin: 10px;
             height: 100px;
             width: 250px;
-        }
+        } */
 
     </style>
 
@@ -32,7 +32,8 @@
             "esri/widgets/Legend",
             "esri/widgets/TimeSlider",
             "esri/TimeInterval",
-        ], function(Map, MapView, FeatureLayer, Legend, TimeSlider, TimeInterval) {
+            "esri/widgets/Expand"
+        ], function(Map, MapView, FeatureLayer, Legend, TimeSlider, TimeInterval, Expand) {
 
             var map = new Map({
                 basemap: "gray-vector"
@@ -121,6 +122,8 @@
                 }
             };
 
+            
+
             var covidArgLayer = new FeatureLayer({
                 url: "https://services8.arcgis.com/lWclWcVNLPjG6Dvs/arcgis/rest/services/covidarg_points/FeatureServer/0",
                 renderer:rendererConfirmados,
@@ -154,9 +157,12 @@
                             field: "total_cases",
                             legendOptions: {title: "Casos Confirmados por Pais"},
                             stops: [
-                                { value: 1000, size: 5},
-                                { value: 1000000, size: 50},
-                                { value: 2000000, size: 100}
+                                { value: 100, size: 5},
+                                { value: 1000, size: 10},
+                                { value: 10000, size: 20},
+                                { value: 100000, size: 40},
+                                { value: 1000000, size: 80},
+                                { value: 10000000, size: 160}
                             ]
                         }
                     ],
@@ -214,12 +220,18 @@
                 }]
             });
 
-            view.ui.add(legend, "bottom-right");
+
+            var legendExpand = new Expand({
+                view: view,
+                content: legend,
+                expanded: true
+            });
+            view.ui.add(legendExpand, "bottom-right");
 
 
             
             var timeSlider = new TimeSlider({
-                container: "timeSliderDiv",
+                //container: "timeSliderDiv",
                 mode: "instant",
                 fullTimeExtent: {
                     start: new Date(2020, 1, 1),
@@ -242,6 +254,6 @@
 </head>
 <body>
     <div id="viewDiv"></div>
-    <div id="timeSlider"></div>
+    <!-- <div id="timeSlider"></div> -->
 </body>
 </html>
