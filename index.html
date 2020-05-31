@@ -122,20 +122,25 @@
 
             var covidLayer = new FeatureLayer({
                 url: "https://services8.arcgis.com/lWclWcVNLPjG6Dvs/arcgis/rest/services/covidarg_points/FeatureServer/0",
-                
-                renderer:[rendererConfirmados,rendererActivos],
+                renderer:rendererConfirmados,
                 popupTemplate: popupProvincia,
                 labelingInfo: [labels],
 
             });
-
-            map.add(covidLayer, 0);
+            map.add(covidLayer1, 0);
+            var covidLayer = new FeatureLayer({
+                url: "https://services8.arcgis.com/lWclWcVNLPjG6Dvs/arcgis/rest/services/covidarg_points/FeatureServer/0",
+                renderer:rendererActivos,
+                popupTemplate: popupProvincia,
+                //labelingInfo: [labels],
+            });
+            map.add(covidLayer1, 0);
 
             var legend = new Legend({
                 view: view,
-                title: 'Leyendas',
                 layerInfos: [{
-                    layer: covidLayer
+                    layer: covidLayer,
+                    title: 'Leyendas',
                 }]
             });
 
