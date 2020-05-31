@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import geopandas as gpd
 import json
-from shapely.geometry import Polygon, MultiPolygon
+from shapely.geometry import Polygon, MultiPolygon, Point, GeometryCollection
 from bokeh.io import show, output_file
 from bokeh.io.doc import curdoc
 from bokeh.models import HoverTool, Paragraph, Div, ColumnDataSource, Tabs, Panel, Select, CheckboxButtonGroup, GeoJSONDataSource, LinearColorMapper, ColorBar, NumeralTickFormatter, DatetimeTickFormatter
@@ -43,8 +43,8 @@ for multipolygon in arg[arg.nam=='Tierra del Fuego, Antártida e Islas del Atlá
 arg.geometry[16] = MultiPolygon(new_poligon_list)
 
 # Reducir la cantidad de puntos en el mapa para reducir el tiempo de carga
-#for i in range(arg.shape[0]):
-#    arg.geometry[i] = arg.geometry[i].simplify(tolerance=0.05, preserve_topology=False)
+for i in range(arg.shape[0]):
+    arg.geometry[i] = arg.geometry[i].simplify(tolerance=0.03, preserve_topology=False)
 
 
 casos_arg = pd.read_csv('casosarg.csv', sep = ",", header = 0, names=("dias","casos"))
@@ -56,11 +56,26 @@ casos_arg_predict['dias'] = pd.date_range(casos_arg['dias'][casos_arg.shape[0]-1
 mayores_65 = pd.read_csv("data/mayores65.txt", sep = ",")
 arg = pd.merge(arg, mayores_65, on="nam")
 
+arg.to_file("arg_polygons.geojson", driver='GeoJSON')
+
+arg = arg.drop('geometry',1)
+
 centros = pd.read_csv("data/centros.txt", sep = ",")
+centros['geometry'] = gpd.points_from_xy(centros.lon, centros.lat)
+
 arg = pd.merge(arg, centros, on="nam")
 
-arg.to_file("arg_full.geojson", driver='GeoJSON')
+arg.to_file("arg_points.geojson", driver='GeoJSON')
+
 exit()
+
+
+
+
+
+
+
+
 
 ###### Bokeh ######
 

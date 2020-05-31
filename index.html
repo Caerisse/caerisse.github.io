@@ -1,127 +1,195 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>ArcGIS API for JavaScript Hello World App</title>
-  <style>
-    html, body, #viewDiv {
-      padding: 0;
-      margin: 0;
-      height: 100%;
-      width: 100%;
-    }
-  </style>
-
-  <link rel="stylesheet" href="https://js.arcgis.com/4.15/esri/css/main.css">
-  <script src="https://js.arcgis.com/4.15/"></script>
-
-  <script>
-    require([
-      "esri/Map",
-      "esri/views/MapView",
-      "esri/layers/FeatureLayer",
-      "esri/widgets/Legend"
-    ], function(Map, MapView, FeatureLayer, Legend) {
-
-      var map = new Map({
-        basemap: "gray-vector"
-      });
-
-      var view = new MapView({
-        container: "viewDiv",
-        map: map,
-        center: [-65.0,-41.0],
-        zoom: 3
-      });
-
-      var renderer = {
-        type: "simple",
-        symbol: { 
-          type: "simple-fill",
-          outline: {
-              style: "none"
-            }
-          },
-        visualVariables: [{
-          type: "color",
-          field: "Confirmados",
-          legendOptions: {
-            title: "Casos Confirmados"
-          },
-          stops: [
-            { value: 50, color: "#DDBBBD"},
-            { value: 100, color: "#D09FA3"},
-            { value: 200, color: "#C28488"},
-            { value: 400, color: "#B16065"},
-            { value: 800, color: "#A45156"},
-            { value: 1600, color: "#894348"},
-            { value: 3200, color: "#6D363A"},
-            { value: 6400, color: "#52282B"},
-            ]
-          }]
-      }
-
-      var popupProvincia = {
-        title: "{nam}",
-        content: [{
-          type: "fields",
-          fieldInfos: [
-            { fieldName: "Confirmados",
-              label: "Casos Confirmados" },
-            { fieldName: 'Activos',
-              label: "Casos Activos" },,
-            { fieldName: 'Recuperados',
-              label: "Casos Recuperados" },,
-            { fieldName: 'Fallecidos',
-              label: "Casos Fallecidos" },,
-            { fieldName: 'Mayores_de_65',
-              label: "Habitantes mayores de 65" },
-            ]
-        }]
-      }
-
-      var labels = {
-        symbol: {
-          type: "text",
-          color: "#000000",
-          font: {
-            size: "12px",
-            family: "Noto Sans",
-            style: "italic",
-            weight: "normal"
-            }
-          },
-        labelPlacement: "always-horizontal",
-        labelExpressionInfo: {
-          expression: "$feature.nam"
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>ArcGIS API for JavaScript Hello World App</title>
+    <style>
+        html, body, #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
         }
-      };
+    </style>
 
-      var covidLayer = new FeatureLayer({
-        url: "https://services8.arcgis.com/lWclWcVNLPjG6Dvs/arcgis/rest/services/covidarg/FeatureServer/0",
-        
-        renderer:renderer,
-        popupTemplate: popupProvincia,
-        labelingInfo: [labels],
+    <link rel="stylesheet" href="https://js.arcgis.com/4.15/esri/css/main.css">
+    <script src="https://js.arcgis.com/4.15/"></script>
 
-      });
+    <script>
+        require([
+            "esri/Map",
+            "esri/views/MapView",
+            "esri/layers/FeatureLayer",
+            "esri/widgets/Legend"
+        ], function(Map, MapView, FeatureLayer, Legend) {
 
-      map.add(covidLayer, 0);
+            var map = new Map({
+                basemap: "gray-vector"
+            });
 
-      var legend = new Legend({
-        view: view,
-        layerInfos: [{
-          layer: covidLayer
-        }]
-      });
+            var view = new MapView({
+                container: "viewDiv",
+                map: map,
+                center: [-65.0,-41.0],
+                zoom: 3
+            });
 
-      view.ui.add(legend, "bottom-right");
+            var renderer = {
+                type: "simple",
+                symbol: { 
+                    type: "simple-fill",
+                    color: [0,0,0,0],
+                    outline: {
+                            color: "blue",
+                            width: 2
+                        }
+                    },
+                    visualVariables: [{
+                    type: "size",
+                    field: "Confirmados",
+                    legendOptions: {
+                        title: "Casos"
+                    },
+                    stops: [
+                        { value: 50, size: 1},
+                        { value: 100, size: 2},
+                        { value: 200, size: 4},
+                        { value: 400, size: 8},
+                        { value: 800, size: 16},
+                        { value: 1600, size: 32},
+                        { value: 3200, size: 64},
+                        { value: 6400, size: 128},
+                        ]
+                    },{
+                    type: "size",
+                    field: "Activos",
+                    legendOptions: {
+                        title: "Casos"
+                    },
+                    stops: [
+                        { value: 50, size: 1},
+                        { value: 100, size: 2},
+                        { value: 200, size: 4},
+                        { value: 400, size: 8},
+                        { value: 800, size: 16},
+                        { value: 1600, size: 32},
+                        { value: 3200, size: 64},
+                        { value: 6400, size: 128},
+                        ]
+                    },{
+                    type: "size",
+                    field: "Recuperados",
+                    legendOptions: {
+                        title: "Casos"
+                    },
+                    stops: [
+                        { value: 50, size: 1},
+                        { value: 100, size: 2},
+                        { value: 200, size: 4},
+                        { value: 400, size: 8},
+                        { value: 800, size: 16},
+                        { value: 1600, size: 32},
+                        { value: 3200, size: 64},
+                        { value: 6400, size: 128},
+                        ]
+                    },{
+                    type: "size",
+                    field: "Fallecidos",
+                    legendOptions: {
+                        title: "Casos"
+                    },
+                    stops: [
+                        { value: 50, size: 1},
+                        { value: 100, size: 2},
+                        { value: 200, size: 4},
+                        { value: 400, size: 8},
+                        { value: 800, size: 16},
+                        { value: 1600, size: 32},
+                        { value: 3200, size: 64},
+                        { value: 6400, size: 128},
+                        ]
+                    }]
+                /* visualVariables: [{
+                    type: "color",
+                    field: "Confirmados",
+                    legendOptions: {
+                        title: "Casos Confirmados"
+                    },
+                    stops: [
+                        { value: 50, color: "#DDBBBD"},
+                        { value: 100, color: "#D09FA3"},
+                        { value: 200, color: "#C28488"},
+                        { value: 400, color: "#B16065"},
+                        { value: 800, color: "#A45156"},
+                        { value: 1600, color: "#894348"},
+                        { value: 3200, color: "#6D363A"},
+                        { value: 6400, color: "#52282B"},
+                        ]
+                    }] */
+            }
 
-    });
-  </script>
+            var popupProvincia = {
+                title: "{nam}",
+                content: [{
+                    type: "fields",
+                    fieldInfos: [
+                        { fieldName: "Confirmados",
+                            label: "Casos Confirmados" },
+                        { fieldName: 'Activos',
+                            label: "Casos Activos" },,
+                        { fieldName: 'Recuperados',
+                            label: "Casos Recuperados" },,
+                        { fieldName: 'Fallecidos',
+                            label: "Casos Fallecidos" },,
+                        { fieldName: 'Mayores_de_65',
+                            label: "Habitantes mayores de 65" },
+                        ]
+                }]
+            }
+
+            var labels = {
+                symbol: {
+                    type: "text",
+                    color: "#000000",
+                    font: {
+                        size: "12px",
+                        family: "Noto Sans",
+                        style: "italic",
+                        weight: "normal"
+                        }
+                    },
+                labelPlacement: "always-horizontal",
+                labelExpressionInfo: {
+                    expression: "$feature.nam"
+                }
+            };
+
+            var covidLayer = new FeatureLayer({
+                url: "https://services8.arcgis.com/lWclWcVNLPjG6Dvs/arcgis/rest/services/covidarg_points/FeatureServer/0",
+                
+                renderer:renderer,
+                popupTemplate: popupProvincia,
+                labelingInfo: [labels],
+
+            });
+
+            map.add(covidLayer, 0);
+
+            var legend = new Legend({
+                view: view,
+                title: 'Leyendas',
+                layerInfos: [{
+                    layer: covidLayer
+                }]
+            });
+
+            view.ui.add(legend, "bottom-right");
+
+        });
+    </script>
 </head>
 <body>
-  <div id="viewDiv"></div>
+    <div id="viewDiv"></div>
 </body>
 </html>
