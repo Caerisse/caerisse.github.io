@@ -109,6 +109,16 @@
 
       map.add(covidLayer, 0);
 
+      var legend = new Legend({
+        view: view,
+        layerInfos: [{
+          layer: covidLayer,
+          title: "Legend"
+        }]
+      });
+
+      view.ui.add(legend, "bottom-right");
+
     });
   </script>
 </head>
