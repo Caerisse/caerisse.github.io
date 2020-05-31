@@ -37,11 +37,27 @@
       var renderer = {
         type: "simple",
         symbol: { 
-          type: "simple-fill" 
+          type: "simple-fill",
+          outline: {
+              style: "none"
+            }
           },
         visualVariables: [{
           type: "color",
-          field: "Confirmados"
+          field: "Confirmados",
+          stops: [
+            { value: 0, color: "#EBD6D7"},
+            { value: 50, color: "#DDBBBD"},
+            { value: 100, color: "#D09FA3"},
+            { value: 200, color: "#C28488"},
+            { value: 400, color: "#B16065"},
+            { value: 800, color: "#A45156"},
+            { value: 1600, color: "#894348"},
+            { value: 3200, color: "#6D363A"},
+            { value: 6400, color: "#52282B"},
+            { value: 12800, color: "#371B1D"},
+            { value: 25600, color: "#1B0D0E"},
+            ]
           }]
       }
 
