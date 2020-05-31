@@ -43,16 +43,22 @@
             }
           },
         visualVariables: [{
-          type: "color",
-          field: "Confirmados",
+          type: "size",
+          field: "Recuperados",
           legendOptions: {
-            title: "Casos Confirmados"
+            title: "Casos Recuperados"
           },
           stops: [
-            { value: 5, color: "#DDBBBD"},
-            { value: 10000, color: "#52282B"},
+            { value: 50, size: 0.5},
+            { value: 100, size: 1},
+            { value: 200, size: 2},
+            { value: 400, size: 4},
+            { value: 800, size: 8},
+            { value: 1600, size: 16},
+            { value: 3200, size: 32},
+            { value: 6400, size: 64},
             ]
-          },]
+          }]
       }
 
       var popupProvincia = {
