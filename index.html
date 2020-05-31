@@ -58,22 +58,6 @@
             { value: 3200, color: "#6D363A"},
             { value: 6400, color: "#52282B"},
             ]
-          },{
-          type: "size",
-          field: "Recuperados",
-          legendOptions: {
-            title: "Casos Recuperados"
-          },
-          stops: [
-            { value: 50, size: 0.5},
-            { value: 100, size: 1},
-            { value: 200, size: 2},
-            { value: 400, size: 4},
-            { value: 800, size: 8},
-            { value: 1600, size: 16},
-            { value: 3200, size: 32},
-            { value: 6400, size: 64},
-            ]
           }]
       }
 
@@ -86,9 +70,9 @@
               label: "Casos Confirmados" },
             { fieldName: 'Activos',
               label: "Casos Activos" },,
-            { fieldName: 'Activos',
-              label: "Casos Recuperados" },,
             { fieldName: 'Recuperados',
+              label: "Casos Recuperados" },,
+            { fieldName: 'Fallecidos',
               label: "Casos Fallecidos" },,
             { fieldName: 'Mayores_de_65',
               label: "Habitantes mayores de 65" },
@@ -107,7 +91,7 @@
             weight: "normal"
             }
           },
-        labelPlacement: "center-center",
+        labelPlacement: "always-horizontal",
         labelExpressionInfo: {
           expression: "$feature.nam"
         }
