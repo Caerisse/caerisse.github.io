@@ -36,11 +36,13 @@
 
       var renderer = {
         type: "simple",
-        symbol: {
-          type: "simple-line",
-          color: "blue",
-          width: "8px"
-        }
+        symbol: { 
+          type: "simple-fill" 
+          },
+        visualVariables: [{
+          type: "color",
+          field: "Confirmados"
+          }]
       }
 
       var popupProvincia = {
@@ -55,16 +57,14 @@
       var labels = {
         symbol: {
           type: "text",
-          color: "#FFFFFF",
-          //haloColor: "#5E8D74",
-          //haloSize: "2px",
+          color: "#000000",
           font: {
-            size: "12px",
+            size: "14px",
             family: "Noto Sans",
             style: "italic",
             weight: "normal"
-          }
-        },
+            }
+          },
         labelPlacement: "above-center",
         labelExpressionInfo: {
           expression: "$feature.nam"
@@ -76,7 +76,8 @@
         
         renderer:renderer,
         popupTemplate: popupProvincia,
-        labelingInfo: [labels]
+        labelingInfo: [labels],
+        opacity: .75,
 
       });
 
