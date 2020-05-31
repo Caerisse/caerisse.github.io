@@ -11,6 +11,14 @@
             height: 100%;
             width: 100%;
         }
+
+        #timeSlider {
+            padding: 10px;
+            margin: 10px;
+            height: 100px;
+            width: 250px;
+        }
+
     </style>
 
     <link rel="stylesheet" href="https://js.arcgis.com/4.15/esri/css/main.css">
@@ -22,8 +30,9 @@
             "esri/views/MapView",
             "esri/layers/FeatureLayer",
             "esri/widgets/Legend",
-            //"esri/popup/content/PieChartMediaInfo"
-        ], function(Map, MapView, FeatureLayer, Legend, PieChartMediaInfo) {
+            "esri/widgets/TimeSlider",
+            "esri/TimeInterval",
+        ], function(Map, MapView, FeatureLayer, Legend, TimeSlider, TimeInterval) {
 
             var map = new Map({
                 basemap: "gray-vector"
@@ -59,7 +68,7 @@
                         legendOptions: {title: "Casos Confirmados por provincia en Argentina"},
                         stops: [
                             { value: 100, size: 5},
-                            { value: 10000, size: 80}
+                            { value: 10000, size: 50}
                         ]
                     }
                 ],
@@ -112,29 +121,127 @@
                 }
             };
 
-            var covidLayer = new FeatureLayer({
+            var covidArgLayer = new FeatureLayer({
                 url: "https://services8.arcgis.com/lWclWcVNLPjG6Dvs/arcgis/rest/services/covidarg_points/FeatureServer/0",
                 renderer:rendererConfirmados,
                 popupTemplate: popupProvincia,
-                labelingInfo: [labels],
+            });
+            map.add(covidArgLayer, 0);
+
+//----------------------------------------------
+
+            var selectedDate = new Date();
+
+            var covidWorldLayer = new FeatureLayer({
+                url: "https://services8.arcgis.com/lWclWcVNLPjG6Dvs/arcgis/rest/services/world_covid/FeatureServer/0",
+
+                outFields: ["location","date", "total_cases", "total_deaths", "new_cases", "new_deaths"],
+
+                definitionExpression: `date = '${ selectedDate.toLocaleDateString('en-US') }'`,
+
+                renderer:{   
+                    type: "simple",
+                    symbol: { 
+                        type: "simple-marker",
+                        color: [200,0,0,0.5],
+                        outline: {
+                            color: "black",
+                            width: 1
+                        }
+                    },
+                    visualVariables: [
+                        {   type: "size",
+                            field: "total_cases",
+                            legendOptions: {title: "Casos Confirmados por Pais"},
+                            stops: [
+                                { value: 1000, size: 5},
+                                { value: 1000000, size: 50},
+                                { value: 2000000, size: 100}
+                            ]
+                        }
+                    ],
+                }, 
+
+                popupTemplate: {  
+                    title: "{location} - {date}",
+                    expressionInfos: [{
+                        name: "active_and_recovered_cases",
+                        title: "Casos Activos y Recuperados",
+                        expression: "$feature.total_cases - $feature.total_deaths"
+                    }],
+                    content: [
+                    {   type: "fields",
+                        fieldInfos: [
+                            {   fieldName: "total_cases",
+                                label: "Casos Confirmados" },
+                            {   fieldName: "expression/active_and_recovered_cases",
+                                label: "Casos Activos y Recuperados" },
+                            {   fieldName: 'total_deaths',
+                                label: "Casos Fallecidos" },
+                            {   fieldName: 'new_cases',
+                                label: "Casos Registrados en el dia" },
+                            {   fieldName: 'new_deaths',
+                                label: "Casos Fallecidos en el dia" },
+                        ]
+                    },
+                    {   type: "media",
+                        mediaInfos: [
+                            {   title: "<b>Distribucion de Casos Confirmados</b>",
+                                type: "pie-chart" ,
+                                caption: "",
+                                value: {
+                                    fields: ['expression/active_and_recovered_cases','total_deaths'],
+                                    normalizeField: null,
+                                }
+                            }
+                        ]
+                    },
+                    ]
+                }
 
             });
-            map.add(covidLayer, 0);
+
+            map.add(covidWorldLayer, 0);
 
             var legend = new Legend({
                 view: view,
                 layerInfos: [{
-                    layer: covidLayer,
-                    title: 'Leyendas',
+                    layer: covidArgLayer,
+                    title: '',
+                },{
+                    layer: covidWorldLayer,
+                    title: '',
                 }]
             });
 
             view.ui.add(legend, "bottom-right");
+
+
+            
+            var timeSlider = new TimeSlider({
+                container: "timeSliderDiv",
+                mode: "instant",
+                fullTimeExtent: {
+                    start: new Date(2020, 1, 1),
+                    end: selectedDate
+                },
+                values: [selectedDate],
+                stops: {
+                    interval: TimeInterval.days
+                }
+            });
+
+            timeSlider.watch("values", function(values){
+                covidWorldLayer.definitionExpression = `date = '${ values[0].toLocaleDateString('en-US') }'`
+            });
+
+            view.ui.add(timeSlider, "bottom-left");
 
         });
     </script>
 </head>
 <body>
     <div id="viewDiv"></div>
+    <div id="timeSlider"></div>
 </body>
 </html>

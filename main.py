@@ -32,7 +32,7 @@ arg.to_file("arg_points.geojson", driver='GeoJSON')
 ############# WORLD DATA ###############
 
 url = "https://covid.ourworldindata.org/data/owid-covid-data.csv"
-covid = pd.read_csv(url, index_col='date', parse_dates=True,infer_datetime_format=True)
+covid = pd.read_csv(url, parse_dates=['date'], infer_datetime_format=True)
 
 countries = pd.read_csv('data/countries_codes_and_coordinates.csv', header = "infer", sep=';')
 countries = gpd.GeoDataFrame(countries, geometry=gpd.points_from_xy(countries.Longitude, countries.Latitude))
