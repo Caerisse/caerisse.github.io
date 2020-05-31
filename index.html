@@ -34,10 +34,47 @@
         zoom: 3
       });
 
+      var renderer = {
+        type: "simple",
+        symbol: {
+          type: "simple-line",
+          color: "blue",
+          width: "8px"
+        }
+      }
+
+      var popupProvincia = {
+        "title": "{nam}",
+        "content":  "<b>Casos Confirmados:</b> {Confirmados}<br>" +
+                    "<b>Casos Activos:</b> {Activos}<br>" + 
+                    "<b>Casos Recuperados:</b> {Recuparedos}<br>" + 
+                    "<b>Casos Fallecidos:</b> {Fallecidos}<br>" +
+                    "<b>Habitantes mayores de 65:</b> {Mayores_de_65}"
+      }
+
+      var labels = {
+        symbol: {
+          type: "text",
+          color: "#FFFFFF",
+          //haloColor: "#5E8D74",
+          //haloSize: "2px",
+          font: {
+            size: "12px",
+            family: "Noto Sans",
+            style: "italic",
+            weight: "normal"
+          }
+        },
+        labelPlacement: "above-center",
+        labelExpressionInfo: {
+          expression: "$feature.nam"
+        }
+      };
+
       var covidLayer = new FeatureLayer({
-        url: "https://services8.arcgis.com/lWclWcVNLPjG6Dvs/arcgis/rest/services/covidarg_fullres/FeatureServer/0",
+        url: "https://services8.arcgis.com/lWclWcVNLPjG6Dvs/arcgis/rest/services/covidarg/FeatureServer/0",
         
-        
+        popupTemplate: popupProvincia
 
       });
 
