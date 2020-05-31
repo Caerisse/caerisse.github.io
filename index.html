@@ -48,9 +48,6 @@
                 visualVariables: [
                     {   type: "size",
                         field: "Confirmados",
-                        legendOptions: {
-                            title: "Casos"
-                        },
                         stops: [
                             { value: 100, size: 3},
                             { value: 500, size: 15},
@@ -58,7 +55,21 @@
                             { value: 3000, size: 90},
                             { value: 5000, size: 150},
                         ]
-                    },
+                    }
+                ],
+            }
+
+            var rendererActivos = {
+                type: "simple",
+                symbol: { 
+                    type: "simple-marker",
+                    color: [0,200,0,0.5],
+                    outline: {
+                        color: "black",
+                        width: 1
+                    }
+                },
+                visualVariables: [
                     {   type: "size",
                         field: "Activos",
                         stops: [
@@ -112,7 +123,7 @@
             var covidLayer = new FeatureLayer({
                 url: "https://services8.arcgis.com/lWclWcVNLPjG6Dvs/arcgis/rest/services/covidarg_points/FeatureServer/0",
                 
-                renderer:rendererConfirmados,
+                renderer:[rendererConfirmados,rendererActivos],
                 popupTemplate: popupProvincia,
                 labelingInfo: [labels],
 
