@@ -35,7 +35,7 @@
                 zoom: 3
             });
 
-            var renderer = {
+            var rendererConfirmados = {
                 type: "simple",
                 symbol: { 
                     type: "simple-marker",
@@ -53,6 +53,19 @@
                         },
                         stops: [
                             { value: 100, size: 3},
+                            { value: 500, size: 15},
+                            { value: 1000, size: 30},
+                            { value: 3000, size: 90},
+                            { value: 5000, size: 150},
+                        ]
+                    },
+                    {   type: "size",
+                        field: "Activos",
+                        stops: [
+                            { value: 100, size: 3},
+                            { value: 500, size: 15},
+                            { value: 1000, size: 30},
+                            { value: 3000, size: 90},
                             { value: 5000, size: 150},
                         ]
                     }
@@ -99,7 +112,7 @@
             var covidLayer = new FeatureLayer({
                 url: "https://services8.arcgis.com/lWclWcVNLPjG6Dvs/arcgis/rest/services/covidarg_points/FeatureServer/0",
                 
-                renderer:renderer,
+                renderer:rendererConfirmados,
                 popupTemplate: popupProvincia,
                 labelingInfo: [labels],
 
